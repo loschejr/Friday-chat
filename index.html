@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FRIDAY Chat Nexus</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #101010;
+    color: #0f0;
+    margin: 0; padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  #chat {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: #202020;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .msg { margin: 8px 0; }
+  .user { color: #0af; }
+  .ai { color: #fa0; }
+  input {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background: #333;
+    color: white;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+<div id="chat"><div class="msg ai">FRIDAY: Online and connected to Nexus.</div></div>
+<input id="userInput" placeholder="Say something..." onkeypress="handleKey(event)" autocomplete="off" />
+<script>
+const chat = document.getElementById('chat');
+const input = document.getElementById('userInput');
+
+function handleKey(e) {
+  if (e.key === 'Enter') {
+    let userMsg = input.value.trim();
+    if (!userMsg) return;
+    addMessage('user', userMsg);
+    input.value = '';
+    simulateAIResponse(userMsg);
+  }
+}
+
+function addMessage(cls, text) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + cls;
+  div.textContent = (cls === 'user' ? 'You: ' : 'FRIDAY: ') + text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function simulateAIResponse(msg) {
+  // Simple simulation: echo with delay
+  setTimeout(() => {
+    addMessage('ai', 'I received: "' + msg + '". Nexus link active.');
+    sendSMSAlert(msg);
+  }, 1000);
+}
+
+function sendSMSAlert(msg) {
+  // Simulated SMS alert to 307-941-0118
+  console.log('Simulating SMS alert to 307-941-0118:', msg);
+  // In real deployment, backend would send SMS here
+}
+</script>
+</body>
+</html>
